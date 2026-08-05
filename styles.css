@@ -1,0 +1,183 @@
+.vpte-modal p {
+	color: var(--text-muted);
+}
+
+.vpte-modal .setting-item {
+	padding-top: 14px;
+	padding-bottom: 14px;
+}
+
+
+.vpte-multi-modal {
+	width: min(760px, 92vw);
+}
+
+.vpte-search {
+	width: 100%;
+	margin: 8px 0 10px;
+}
+
+.vpte-selection-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin-bottom: 8px;
+}
+
+.vpte-selection-count {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	margin-bottom: 8px;
+}
+
+.vpte-file-list {
+	max-height: 52vh;
+	overflow-y: auto;
+	border: 1px solid var(--background-modifier-border);
+	border-radius: 8px;
+	background: var(--background-secondary);
+}
+
+.vpte-file-row {
+	display: flex;
+	align-items: flex-start;
+	gap: 10px;
+	padding: 9px 10px;
+	border-bottom: 1px solid var(--background-modifier-border);
+	cursor: pointer;
+}
+
+.vpte-file-row:last-child {
+	border-bottom: 0;
+}
+
+.vpte-file-row:hover {
+	background: var(--background-modifier-hover);
+}
+
+.vpte-file-row input[type="checkbox"] {
+	margin-top: 3px;
+	flex: 0 0 auto;
+}
+
+.vpte-file-text {
+	min-width: 0;
+}
+
+.vpte-file-name {
+	font-weight: 600;
+	word-break: break-word;
+}
+
+.vpte-file-path {
+	color: var(--text-muted);
+	font-size: var(--font-ui-smaller);
+	word-break: break-word;
+}
+
+.vpte-empty {
+	padding: 18px;
+	color: var(--text-muted);
+	text-align: center;
+}
+
+.vpte-multi-footer {
+	display: flex;
+	justify-content: flex-end;
+	gap: 8px;
+	margin-top: 12px;
+}
+
+@media (max-width: 600px) {
+	.vpte-multi-modal {
+		width: auto;
+	}
+
+	.vpte-file-list {
+		max-height: 48vh;
+	}
+
+	.vpte-selection-toolbar button {
+		flex: 1 1 auto;
+	}
+}
+
+
+/* v1.3.1 — modal responsivo com rodapé sempre visível */
+.vpte-multi-shell {
+	width: min(780px, calc(100vw - 24px));
+	max-width: min(780px, calc(100vw - 24px));
+	max-height: min(88vh, 860px);
+	overflow: hidden;
+}
+
+.vpte-multi-shell .modal-content.vpte-multi-modal {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	min-width: 0;
+	min-height: 0;
+	max-height: min(82vh, 800px);
+	overflow: hidden;
+	padding-bottom: 0;
+}
+
+.vpte-multi-modal > h2,
+.vpte-multi-modal > p,
+.vpte-multi-modal > .vpte-search,
+.vpte-multi-modal > .vpte-selection-toolbar,
+.vpte-multi-modal > .vpte-selection-count {
+	flex: 0 0 auto;
+}
+
+.vpte-multi-modal .vpte-file-list {
+	flex: 1 1 auto;
+	min-height: 160px;
+	max-height: none;
+	overflow-y: auto;
+	overscroll-behavior: contain;
+}
+
+.vpte-multi-footer {
+	position: sticky;
+	bottom: 0;
+	z-index: 5;
+	flex: 0 0 auto;
+	align-items: center;
+	padding: 12px 0 max(12px, env(safe-area-inset-bottom));
+	margin-top: 10px;
+	border-top: 1px solid var(--background-modifier-border);
+	background: var(--background-primary);
+}
+
+.vpte-multi-footer button {
+	min-height: 38px;
+	padding-inline: 16px;
+}
+
+@media (max-width: 600px) {
+	.vpte-multi-shell {
+		width: calc(100vw - 12px);
+		max-width: calc(100vw - 12px);
+		max-height: calc(100vh - 12px);
+	}
+
+	.vpte-multi-shell .modal-content.vpte-multi-modal {
+		max-height: calc(100vh - 54px);
+		padding-left: 12px;
+		padding-right: 12px;
+	}
+
+	.vpte-multi-modal .vpte-file-list {
+		min-height: 120px;
+	}
+
+	.vpte-multi-footer {
+		gap: 8px;
+	}
+
+	.vpte-multi-footer button {
+		flex: 1 1 0;
+		min-width: 0;
+	}
+}

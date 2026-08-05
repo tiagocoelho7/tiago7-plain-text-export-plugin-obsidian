@@ -1,0 +1,9 @@
+{
+  "id": "tiago7-plain-text-export-plugin-obsidian",
+  "name": "tiago7 Plain Text Export Plugin Obsidian",
+  "version": "1.4.2",
+  "minAppVersion": "1.5.0",
+  "description": "Exporta notas como texto limpo e expande incorporações de notas, cabeçalhos e blocos sem modificar o vault.",
+  "author": "Tiago + ChatGPT",
+  "isDesktopOnly": false
+}
