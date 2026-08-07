@@ -1,4 +1,4 @@
-# tiago7 Plain Text Export Plugin Obsidian v1.4.2
+  # tiago7 Plain Text Export Plugin Obsidian v1.4.3
 
 ## Expansão de notas incorporadas
 
@@ -18,6 +18,9 @@ A exportação pode substituir incorporações do Obsidian pelo conteúdo real d
 - Ciclos são interrompidos com uma indicação como `[Incorporação circular ignorada: Nome]`.
 - Imagens, PDFs, áudios e outros anexos viram uma indicação textual e nunca são lidos como Markdown.
 - A resolução usa `MetadataCache.getFirstLinkpathDest`, considerando a nota de origem de cada incorporação.
+- Todo título Markdown dentro de uma nota incorporada é rebaixado um nível durante a exportação: `#` vira `##`, `##` vira `###` e assim por diante.
+- Em incorporações encadeadas, cada nível acrescenta mais um `#`, preservando a hierarquia entre a nota principal e as notas incorporadas.
+- Títulos que aparecem dentro de blocos de código cercados por crases ou tils não são alterados.
 
 A alteração acontece apenas na memória durante a exportação. Nenhuma nota original é modificada.
 

@@ -61,6 +61,51 @@ function stripEmbeddedFrontmatter(source) {
 		.replace(/^---\r?\n[\s\S]*?\r?\n---\s*(?:\r?\n|$)/, "");
 }
 
+function shiftEmbeddedHeadings(source) {
+	const text = String(source || "").replace(/\r\n?/g, "\n");
+	const lines = text.match(/[^\n]*(?:\n|$)/g) || [];
+	let output = "";
+	let inFence = false;
+	let fenceCharacter = "";
+	let fenceLength = 0;
+
+	for (const line of lines) {
+		if (!line) continue;
+
+		const hasLineBreak = line.endsWith("\n");
+		const lineWithoutBreak = hasLineBreak ? line.slice(0, -1) : line;
+		const fence = lineWithoutBreak.match(/^\s*(`{3,}|~{3,})/);
+
+		if (fence) {
+			const marker = fence[1];
+			if (!inFence) {
+				inFence = true;
+				fenceCharacter = marker[0];
+				fenceLength = marker.length;
+			} else if (marker[0] === fenceCharacter && marker.length >= fenceLength) {
+				inFence = false;
+				fenceCharacter = "";
+				fenceLength = 0;
+			}
+
+			output += line;
+			continue;
+		}
+
+		let shiftedLine = lineWithoutBreak;
+		if (!inFence) {
+			const heading = lineWithoutBreak.match(/^(\s{0,3}(?:(?:>\s*)+)?)(#{1,})(?=\s|$)(.*)$/);
+			if (heading) {
+				shiftedLine = `${heading[1]}#${heading[2]}${heading[3]}`;
+			}
+		}
+
+		output += shiftedLine + (hasLineBreak ? "\n" : "");
+	}
+
+	return output;
+}
+
 function escapeRegExp(value) {
 	return String(value || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 }
@@ -376,7 +421,7 @@ function cleanMarkdown(source, settings) {
 		line = line.replace(/^\s*>\s?/, "");
 
 		// Preserve headings as requested, while normalizing spacing.
-		const headingMatch = line.match(/^\s*(#{1,6})(?:\s+|$)(.*)$/);
+		const headingMatch = line.match(/^\s*(#{1,})(?:\s+|$)(.*)$/);
 		if (headingMatch) {
 			const headingText = cleanInlineMarkdown(headingMatch[2]).trim();
 			line = settings.preserveHeadings
@@ -980,7 +1025,7 @@ module.exports = class Tiago7PlainTextExport extends Plugin {
 		const nextStack = new Set(stack);
 		nextStack.add(referenceKey);
 		const expanded = await this.expandEmbeddedNotes(embeddedSource, targetFile, nextStack, depth + 1);
-		return expanded.trim();
+		return shiftEmbeddedHeadings(expanded).trim();
 	}
 
 	async expandEmbedsInSegment(segment, sourceFile, stack, depth) {
